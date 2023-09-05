@@ -2,7 +2,9 @@ package com.lee.shop.service;
 
 import com.lee.shop.domain.Member;
 import com.lee.shop.domain.MemberRepository;
+import com.lee.shop.dto.MemberResponseDto;
 import com.lee.shop.dto.MemberSaveRequestDto;
+import com.lee.shop.exception.MemberNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,5 +32,11 @@ public class MemberService {
         if(isExistMember){
             throw new IllegalStateException("이미 존재하는 회원입니다.");
         }
+    }
+
+    public MemberResponseDto findMember(Long memberId){
+        return memberRepository.findById(memberId)
+                .map(MemberResponseDto::new)
+                .orElseThrow(() -> new MemberNotFoundException("존재하지 않는 회원입니다."));
     }
 }
