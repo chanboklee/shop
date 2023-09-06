@@ -4,6 +4,7 @@ import com.lee.shop.domain.Member;
 import com.lee.shop.domain.MemberRepository;
 import com.lee.shop.dto.MemberResponseDto;
 import com.lee.shop.dto.MemberSaveRequestDto;
+import com.lee.shop.dto.MemberUpdateRequestDto;
 import com.lee.shop.exception.MemberNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

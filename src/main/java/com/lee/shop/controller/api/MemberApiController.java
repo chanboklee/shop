@@ -2,6 +2,7 @@ package com.lee.shop.controller.api;
 
 import com.lee.shop.dto.MemberResponseDto;
 import com.lee.shop.dto.MemberSaveRequestDto;
+import com.lee.shop.dto.MemberUpdateRequestDto;
 import com.lee.shop.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
