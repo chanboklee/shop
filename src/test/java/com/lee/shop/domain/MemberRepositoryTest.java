@@ -30,4 +30,22 @@ class MemberRepositoryTest {
         Assertions.assertEquals(member.getPassword(), saveMember.getPassword());
 
     }
+
+    @Test
+    @DisplayName("회원 단건 조회 테스트")
+    void 회원_단건_조회_테스트(){
+        // given
+        Member member = Member.builder().email("chanboklee@naver.com")
+                .password("1234")
+                .build();
+
+        memberRepository.save(member);
+
+        // when
+        Member findMember = memberRepository.findById(1L).orElse(null);
+
+        // then
+        Assertions.assertEquals(findMember.getEmail(), "chanboklee@naver.com");
+        Assertions.assertEquals(findMember.getPassword(), "1234");
+    }
 }
