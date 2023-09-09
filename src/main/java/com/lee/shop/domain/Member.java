@@ -26,4 +26,8 @@ public class Member {
         this.email = email;
         this.password = password;
     }
+
+    public void updateMemberInfo(String password){
+        this.password = password;
+    }
 }

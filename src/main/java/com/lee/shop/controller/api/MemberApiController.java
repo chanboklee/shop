@@ -31,4 +31,11 @@ public class MemberApiController {
     public MemberResponseDto searchMember(@PathVariable("id") Long id){
         return memberService.findMember(id);
     }
+
+    @Operation(summary = "회원 수정", description = "회원 정보 수정")
+    @PutMapping("/members/{id}")
+    public ResponseEntity<Long> updateMember(@PathVariable("id") Long id, @RequestBody @Valid MemberUpdateRequestDto memberUpdateRequestDto){
+        Long memberId = memberService.updateMember(id, memberUpdateRequestDto);
+        return ResponseEntity.ok().body(memberId);
+    }
 }

@@ -40,4 +40,13 @@ public class MemberService {
                 .map(MemberResponseDto::new)
                 .orElseThrow(() -> new MemberNotFoundException("존재하지 않는 회원입니다."));
     }
+
+    @Transactional
+    public Long updateMember(Long memberId, MemberUpdateRequestDto memberUpdateRequestDto){
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new MemberNotFoundException("존재하지 않는 회원입니다."));
+
+        member.updateMemberInfo(memberUpdateRequestDto.getPassword());
+        return member.getId();
+    }
 }
