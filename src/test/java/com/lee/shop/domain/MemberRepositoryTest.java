@@ -48,4 +48,25 @@ class MemberRepositoryTest {
         Assertions.assertEquals(findMember.getEmail(), "chanboklee@naver.com");
         Assertions.assertEquals(findMember.getPassword(), "1234");
     }
+
+    @Test
+    @DisplayName("회원 수정 테스트")
+    void 회원정보_수정_테스트(){
+        // given
+        Member member = Member.builder().email("chanboklee@naver.com")
+                .password("1234")
+                .build();
+
+        memberRepository.save(member);
+
+        // when
+        Member findMember = memberRepository.findById(1L).orElse(null);
+        findMember.updateMemberInfo("4321");
+
+        // then
+        Assertions.assertNotEquals(member.getPassword(), findMember.getPassword());
+        Assertions.assertEquals(findMember.getPassword(), "4321");
+        Assertions.assertEquals(member.getPassword(), "1234");
+
+    }
 }
