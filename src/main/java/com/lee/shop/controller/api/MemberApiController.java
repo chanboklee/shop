@@ -1,5 +1,6 @@
 package com.lee.shop.controller.api;
 
+import com.lee.shop.dto.MemberListResponseDto;
 import com.lee.shop.dto.MemberResponseDto;
 import com.lee.shop.dto.MemberSaveRequestDto;
 import com.lee.shop.dto.MemberUpdateRequestDto;
@@ -10,6 +11,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Tag(name = "MemberApiController", description = "회원 API")
 @RequiredArgsConstructor
@@ -30,6 +33,13 @@ public class MemberApiController {
     @GetMapping("/members/{id}")
     public MemberResponseDto searchMember(@PathVariable("id") Long id){
         return memberService.findMember(id);
+    }
+
+    @Operation(summary = "회원 조회", description = "회원 전체 조회")
+    @GetMapping("/members")
+    public ResponseEntity<List<MemberListResponseDto>> searchMemberList(){
+        List<MemberListResponseDto> memberList = memberService.findMemberList();
+        return ResponseEntity.ok().body(memberList);
     }
 
     @Operation(summary = "회원 수정", description = "회원 정보 수정")

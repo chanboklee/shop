@@ -2,6 +2,7 @@ package com.lee.shop.service;
 
 import com.lee.shop.domain.Member;
 import com.lee.shop.domain.MemberRepository;
+import com.lee.shop.dto.MemberListResponseDto;
 import com.lee.shop.dto.MemberResponseDto;
 import com.lee.shop.dto.MemberSaveRequestDto;
 import com.lee.shop.dto.MemberUpdateRequestDto;
@@ -9,6 +10,9 @@ import com.lee.shop.exception.MemberNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -48,5 +52,11 @@ public class MemberService {
 
         member.updateMemberInfo(memberUpdateRequestDto.getPassword());
         return member.getId();
+    }
+
+    public List<MemberListResponseDto> findMemberList(){
+        return memberRepository.findAll().stream()
+                .map(MemberListResponseDto::new)
+                .collect(Collectors.toList());
     }
 }
