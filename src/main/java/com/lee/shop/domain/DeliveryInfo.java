@@ -2,6 +2,7 @@ package com.lee.shop.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -25,4 +26,15 @@ public class DeliveryInfo {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    @Builder
+    public DeliveryInfo(String recipient, String tel, Address address){
+        this.recipient = recipient;
+        this.tel = tel;
+        this.address = address;
+    }
+
+    public void addDeliveryInfo(Member member){
+        this.member = member;
+        member.getDeliveryInfos().add(this);
+    }
 }

@@ -1,9 +1,6 @@
 package com.lee.shop.controller.api;
 
-import com.lee.shop.dto.MemberListResponseDto;
-import com.lee.shop.dto.MemberResponseDto;
-import com.lee.shop.dto.MemberSaveRequestDto;
-import com.lee.shop.dto.MemberUpdateRequestDto;
+import com.lee.shop.dto.*;
 import com.lee.shop.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -47,5 +44,12 @@ public class MemberApiController {
     public ResponseEntity<Long> updateMember(@PathVariable("id") Long id, @RequestBody @Valid MemberUpdateRequestDto memberUpdateRequestDto){
         Long memberId = memberService.updateMember(id, memberUpdateRequestDto);
         return ResponseEntity.ok().body(memberId);
+    }
+
+    @Operation(summary = "배송지 저장", description = "회원 배송지를 등록")
+    @PostMapping("/members/{id}/delivery_infos")
+    public ResponseEntity<Long> addDeliveryInfo(@PathVariable("id") Long id, @RequestBody @Valid MemberDeliveryInfoSaveRequestDto memberDeliveryInfoSaveRequestDto){
+        Long deliveryInfoId = memberService.addDeliveryInfo(id, memberDeliveryInfoSaveRequestDto);
+        return ResponseEntity.ok().body(deliveryInfoId);
     }
 }
