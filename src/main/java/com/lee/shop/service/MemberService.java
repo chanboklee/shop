@@ -68,6 +68,18 @@ public class MemberService {
                 .address(memberDeliveryInfoSaveRequestDto.getAddress())
                 .build();
         deliveryInfo.addDeliveryInfo(member);
+        deliveryInfoRepository.save(deliveryInfo);
+        return deliveryInfo.getId();
+    }
+
+    @Transactional
+    public Long updateDeliveryInfo(Long memberId, Long deliveryInfoId, MemberDeliveryInfoUpdateDto memberDeliveryInfoUpdateDto){
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> new MemberNotFoundException("존재하지 않는 회원입니다."));
+        DeliveryInfo deliveryInfo = deliveryInfoRepository.findById(deliveryInfoId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 배송지 입니다."));
+        deliveryInfo.updateDeliveryInfo(memberDeliveryInfoUpdateDto.getRecipient(),
+                memberDeliveryInfoUpdateDto.getTel(),
+                memberDeliveryInfoUpdateDto.getAddress()
+        );
         return deliveryInfo.getId();
     }
 }

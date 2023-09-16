@@ -52,4 +52,14 @@ public class MemberApiController {
         Long deliveryInfoId = memberService.addDeliveryInfo(id, memberDeliveryInfoSaveRequestDto);
         return ResponseEntity.ok().body(deliveryInfoId);
     }
+
+    @Operation(summary = "배송지 수정", description = "회원 배송지를 수정")
+    @PutMapping("/members/{memberId}/delivery_infos/{deliveryInfoId}")
+    public ResponseEntity<Long> updateDeliveryInfo(@PathVariable("memberId") Long memberId,
+                                                   @PathVariable("deliveryInfoId") Long deliveryInfoId,
+                                                   @RequestBody @Valid MemberDeliveryInfoUpdateDto memberDeliveryInfoUpdateDto){
+
+        Long id = memberService.updateDeliveryInfo(memberId, deliveryInfoId, memberDeliveryInfoUpdateDto);
+        return ResponseEntity.ok().body(id);
+    }
 }

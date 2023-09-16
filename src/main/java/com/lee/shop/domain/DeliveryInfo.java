@@ -37,4 +37,10 @@ public class DeliveryInfo {
         this.member = member;
         member.getDeliveryInfos().add(this);
     }
+
+    public void updateDeliveryInfo(String recipient, String tel, Address address){
+        this.recipient = recipient;
+        this.tel = tel;
+        this.address = address;
+    }
 }
