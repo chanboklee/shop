@@ -18,6 +18,7 @@ public class Member {
     @GeneratedValue
     @Column(name = "member_id")
     private Long id;
+    private String name;
     private String email;
     private String password;
 
@@ -25,7 +26,8 @@ public class Member {
     private List<DeliveryInfo> deliveryInfos = new ArrayList<>();
 
     @Builder
-    public Member(String email, String password){
+    public Member(String name, String email, String password){
+        this.name = name;
         this.email = email;
         this.password = password;
     }
