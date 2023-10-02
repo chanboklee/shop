@@ -37,20 +37,26 @@ public class MemberApiController {
         return ResponseEntity.ok().body(memberId);
     }
 
-    @Operation(summary = "회원 조회", description = "회원 단건 조회")
+    @Operation(summary = "회원 조회", description = "회원 단건 조회",
+            responses = {@ApiResponse(content = @Content(schema = @Schema(implementation = MemberResponseDto.class)))}
+    )
     @GetMapping("/members/{id}")
     public MemberResponseDto searchMember(@PathVariable("id") Long id){
         return memberService.findMember(id);
     }
 
-    @Operation(summary = "회원 조회", description = "회원 전체 조회")
+    @Operation(summary = "회원 조회", description = "회원 전체 조회",
+        responses = {@ApiResponse(content = @Content(schema = @Schema(implementation = MemberListResponseDto.class)))}
+    )
     @GetMapping("/members")
     public ResponseEntity<List<MemberListResponseDto>> searchMemberList(){
         List<MemberListResponseDto> memberList = memberService.findMemberList();
         return ResponseEntity.ok().body(memberList);
     }
 
-    @Operation(summary = "회원 수정", description = "회원 정보 수정")
+    @Operation(summary = "회원 수정", description = "회원 정보 수정",
+        responses = {@ApiResponse(content = @Content(schema = @Schema(implementation = Long.class)))}
+    )
     @PutMapping("/members/{id}")
     public ResponseEntity<Long> updateMember(@PathVariable("id") Long id, @RequestBody @Valid MemberUpdateRequestDto memberUpdateRequestDto){
         Long memberId = memberService.updateMember(id, memberUpdateRequestDto);
