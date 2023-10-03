@@ -7,7 +7,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -63,20 +62,24 @@ public class MemberApiController {
         return ResponseEntity.ok().body(memberId);
     }
 
-//    @Operation(summary = "배송지 저장", description = "회원 배송지를 등록")
-//    @PostMapping("/members/{id}/delivery_infos")
-//    public ResponseEntity<Long> addDeliveryInfo(@PathVariable("id") Long id, @RequestBody @Valid MemberDeliveryInfoSaveRequestDto memberDeliveryInfoSaveRequestDto){
-//        Long deliveryInfoId = memberService.addDeliveryInfo(id, memberDeliveryInfoSaveRequestDto);
-//        return ResponseEntity.ok().body(deliveryInfoId);
-//    }
-//
-//    @Operation(summary = "배송지 수정", description = "회원 배송지를 수정")
-//    @PutMapping("/members/{memberId}/delivery_infos/{deliveryInfoId}")
-//    public ResponseEntity<Long> updateDeliveryInfo(@PathVariable("memberId") Long memberId,
-//                                                   @PathVariable("deliveryInfoId") Long deliveryInfoId,
-//                                                   @RequestBody @Valid MemberDeliveryInfoUpdateDto memberDeliveryInfoUpdateDto){
-//
-//        Long id = memberService.updateDeliveryInfo(memberId, deliveryInfoId, memberDeliveryInfoUpdateDto);
-//        return ResponseEntity.ok().body(id);
-//    }
+    @Operation(summary = "배송지 저장", description = "회원 배송지 등록",
+        responses = {@ApiResponse(content = @Content(schema = @Schema(implementation = Long.class)))}
+    )
+    @PostMapping("/members/{id}/delivery_infos")
+    public ResponseEntity<Long> addDeliveryInfo(@PathVariable("id") Long id, @RequestBody @Valid MemberDeliveryInfoSaveRequestDto memberDeliveryInfoSaveRequestDto){
+        Long deliveryInfoId = memberService.addDeliveryInfo(id, memberDeliveryInfoSaveRequestDto);
+        return ResponseEntity.ok().body(deliveryInfoId);
+    }
+
+    @Operation(summary = "배송지 수정", description = "회원 배송지 수정",
+        responses = {@ApiResponse(content = @Content(schema = @Schema(implementation = Long.class)))}
+    )
+    @PutMapping("/members/{memberId}/delivery_infos/{deliveryInfoId}")
+    public ResponseEntity<Long> updateDeliveryInfo(@PathVariable("memberId") Long memberId,
+                                                   @PathVariable("deliveryInfoId") Long deliveryInfoId,
+                                                   @RequestBody @Valid MemberDeliveryInfoUpdateDto memberDeliveryInfoUpdateDto){
+
+        Long id = memberService.updateDeliveryInfo(memberId, deliveryInfoId, memberDeliveryInfoUpdateDto);
+        return ResponseEntity.ok().body(id);
+    }
 }

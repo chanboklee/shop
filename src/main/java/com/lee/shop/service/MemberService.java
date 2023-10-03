@@ -1,11 +1,10 @@
 package com.lee.shop.service;
 
+import com.lee.shop.domain.DeliveryInfo;
+import com.lee.shop.domain.DeliveryInfoRepository;
 import com.lee.shop.domain.Member;
 import com.lee.shop.domain.MemberRepository;
-import com.lee.shop.dto.MemberListResponseDto;
-import com.lee.shop.dto.MemberResponseDto;
-import com.lee.shop.dto.MemberSaveRequestDto;
-import com.lee.shop.dto.MemberUpdateRequestDto;
+import com.lee.shop.dto.*;
 import com.lee.shop.exception.MemberNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,7 +19,7 @@ import java.util.stream.Collectors;
 public class MemberService {
 
     private final MemberRepository memberRepository;
-    // private final DeliveryInfoRepository deliveryInfoRepository;
+    private final DeliveryInfoRepository deliveryInfoRepository;
 
     @Transactional
     public Long save(Member member){
@@ -57,26 +56,26 @@ public class MemberService {
                 .collect(Collectors.toList());
     }
 
-//    @Transactional
-//    public Long addDeliveryInfo(Long memberId, MemberDeliveryInfoSaveRequestDto memberDeliveryInfoSaveRequestDto){
-//        Member member = memberRepository.findById(memberId).orElseThrow(() -> new MemberNotFoundException("존재하지 않는 회원입니다."));
-//        DeliveryInfo deliveryInfo = DeliveryInfo.builder().recipient(memberDeliveryInfoSaveRequestDto.getRecipient())
-//                .tel(memberDeliveryInfoSaveRequestDto.getTel())
-//                .address(memberDeliveryInfoSaveRequestDto.getAddress())
-//                .build();
-//        deliveryInfo.addDeliveryInfo(member);
-//        deliveryInfoRepository.save(deliveryInfo);
-//        return deliveryInfo.getId();
-//    }
-//
-//    @Transactional
-//    public Long updateDeliveryInfo(Long memberId, Long deliveryInfoId, MemberDeliveryInfoUpdateDto memberDeliveryInfoUpdateDto){
-//        Member member = memberRepository.findById(memberId).orElseThrow(() -> new MemberNotFoundException("존재하지 않는 회원입니다."));
-//        DeliveryInfo deliveryInfo = deliveryInfoRepository.findById(deliveryInfoId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 배송지 입니다."));
-//        deliveryInfo.updateDeliveryInfo(memberDeliveryInfoUpdateDto.getRecipient(),
-//                memberDeliveryInfoUpdateDto.getTel(),
-//                memberDeliveryInfoUpdateDto.getAddress()
-//        );
-//        return deliveryInfo.getId();
-//    }
+    @Transactional
+    public Long addDeliveryInfo(Long memberId, MemberDeliveryInfoSaveRequestDto memberDeliveryInfoSaveRequestDto){
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> new MemberNotFoundException("존재하지 않는 회원입니다."));
+        DeliveryInfo deliveryInfo = DeliveryInfo.builder().recipient(memberDeliveryInfoSaveRequestDto.getRecipient())
+                .tel(memberDeliveryInfoSaveRequestDto.getTel())
+                .address(memberDeliveryInfoSaveRequestDto.getAddress())
+                .build();
+        deliveryInfo.addDeliveryInfo(member);
+        deliveryInfoRepository.save(deliveryInfo);
+        return deliveryInfo.getId();
+    }
+
+    @Transactional
+    public Long updateDeliveryInfo(Long memberId, Long deliveryInfoId, MemberDeliveryInfoUpdateDto memberDeliveryInfoUpdateDto){
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> new MemberNotFoundException("존재하지 않는 회원입니다."));
+        DeliveryInfo deliveryInfo = deliveryInfoRepository.findById(deliveryInfoId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 배송지 입니다."));
+        deliveryInfo.updateDeliveryInfo(memberDeliveryInfoUpdateDto.getRecipient(),
+                memberDeliveryInfoUpdateDto.getTel(),
+                memberDeliveryInfoUpdateDto.getAddress()
+        );
+        return deliveryInfo.getId();
+    }
 }
