@@ -78,4 +78,9 @@ public class MemberService {
         );
         return deliveryInfo.getId();
     }
+
+    public List<MemberDeliveryInfoListResponseDto> findMemberDeliveryInfos(Long memberId){
+        List<Member> memberDeliveryInfos = memberRepository.findMemberDeliveryInfos(memberId);
+        return memberDeliveryInfos.stream().map(MemberDeliveryInfoListResponseDto::new).collect(Collectors.toList());
+    }
 }

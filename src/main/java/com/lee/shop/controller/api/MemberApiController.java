@@ -82,4 +82,10 @@ public class MemberApiController {
         Long id = memberService.updateDeliveryInfo(memberId, deliveryInfoId, memberDeliveryInfoUpdateDto);
         return ResponseEntity.ok().body(id);
     }
+
+    @GetMapping("/members/{memberId}/delivery_infos")
+    public ResponseEntity<List<MemberDeliveryInfoListResponseDto>> findMemberDeliveryInfos(@PathVariable("memberId") Long memberId){
+        List<MemberDeliveryInfoListResponseDto> memberDeliveryInfos = memberService.findMemberDeliveryInfos(memberId);
+        return ResponseEntity.ok().body(memberDeliveryInfos);
+    }
 }
