@@ -83,6 +83,9 @@ public class MemberApiController {
         return ResponseEntity.ok().body(id);
     }
 
+    @Operation(summary = "배송지 조회", description = "회원의 배송지를 조회한다.",
+        responses = {@ApiResponse(content = @Content(schema = @Schema(implementation = MemberDeliveryInfoListResponseDto.class)))}
+    )
     @GetMapping("/members/{memberId}/delivery_infos")
     public ResponseEntity<List<MemberDeliveryInfoListResponseDto>> findMemberDeliveryInfos(@PathVariable("memberId") Long memberId){
         List<MemberDeliveryInfoListResponseDto> memberDeliveryInfos = memberService.findMemberDeliveryInfos(memberId);
