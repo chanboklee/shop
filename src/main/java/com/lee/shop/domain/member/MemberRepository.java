@@ -1,4 +1,4 @@
-package com.lee.shop.domain;
+package com.lee.shop.domain.member;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

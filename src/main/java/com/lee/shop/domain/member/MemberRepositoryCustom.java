@@ -1,4 +1,4 @@
-package com.lee.shop.domain;
+package com.lee.shop.domain.member;
 
 import java.util.List;
 

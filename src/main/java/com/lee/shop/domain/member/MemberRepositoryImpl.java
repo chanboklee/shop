@@ -1,11 +1,12 @@
-package com.lee.shop.domain;
+package com.lee.shop.domain.member;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
-import static com.lee.shop.domain.QMember.member;
+import static com.lee.shop.domain.member.QMember.member;
+
 
 @RequiredArgsConstructor
 public class MemberRepositoryImpl implements MemberRepositoryCustom{
@@ -18,7 +19,6 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom{
         return queryFactory.select(member)
                 .distinct()
                 .from(member)
-                .join(member.deliveryInfos)
                 .fetchJoin()
                 .where(member.id.eq(memberId))
                 .fetch();
