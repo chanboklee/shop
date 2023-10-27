@@ -23,7 +23,16 @@ public class MemberService {
                 .password(memberSaveServiceRequest.getPassword())
                 .build();
 
+        validateDuplicateMember(member);
+
         Member savedMember = memberRepository.save(member);
         return MemberSaveResponse.of(savedMember);
+    }
+
+    private void validateDuplicateMember(Member member) {
+        boolean isExistsEmail = memberRepository.existsByEmail(member.getEmail());
+        if(isExistsEmail){
+            throw new IllegalArgumentException("이미 존재하는 회원입니다.");
+        }
     }
 }
