@@ -24,7 +24,7 @@ public class MemberController {
     private final MemberService memberService;
 
     @Operation(summary = "회원 가입", description = "회원 가입",
-            responses = {@ApiResponse(content = @Content(schema = @Schema(implementation = Long.class)))}
+            responses = {@ApiResponse(content = @Content(schema = @Schema(implementation = MemberSaveResponse.class)))}
     )
     @PostMapping("/members")
     public MemberSaveResponse saveMember(@RequestBody @Valid MemberSaveRequest memberSaveRequest){
