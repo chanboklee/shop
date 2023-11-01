@@ -4,6 +4,7 @@ import com.lee.shop.api.service.member.request.MemberSaveServiceRequest;
 import com.lee.shop.api.service.member.response.MemberSaveResponse;
 import com.lee.shop.domain.member.Member;
 import com.lee.shop.domain.member.MemberRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,12 @@ class MemberServiceTest {
     @Autowired
     private MemberService memberService;
 
-    @Autowired
     private MemberRepository memberRepository;
+
+    @AfterEach
+    void tearDown() {
+        memberRepository.deleteAllInBatch();
+    }
 
     @DisplayName("성명, 이메일, 패스워드를 입력 받아 회원가입을 한다.")
     @Test
