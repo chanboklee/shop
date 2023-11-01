@@ -1,12 +1,16 @@
 package com.lee.shop.api.service.member;
 
 import com.lee.shop.api.service.member.request.MemberSaveServiceRequest;
+import com.lee.shop.api.service.member.response.MemberListResponse;
 import com.lee.shop.api.service.member.response.MemberSaveResponse;
 import com.lee.shop.domain.member.Member;
 import com.lee.shop.domain.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -34,5 +38,11 @@ public class MemberService {
         if(isExistsEmail){
             throw new IllegalArgumentException("이미 존재하는 회원입니다.");
         }
+    }
+
+    public List<MemberListResponse> findMembers(){
+        return memberRepository.findAll().stream()
+                .map(member -> MemberListResponse.of(member))
+                .collect(Collectors.toList());
     }
 }
