@@ -5,7 +5,6 @@ import com.lee.shop.api.service.member.response.MemberListResponse;
 import com.lee.shop.api.service.member.response.MemberSaveResponse;
 import com.lee.shop.domain.member.Member;
 import com.lee.shop.domain.member.MemberRepository;
-import org.assertj.core.groups.Tuple;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -58,11 +57,7 @@ class MemberServiceTest {
     @Test
     void validateDuplicateMember(){
         // given
-        Member member = Member.builder()
-                .name("이찬복")
-                .email("chanboklee@naver.com")
-                .password("1234")
-                .build();
+        Member member = createMember("이찬복", "chanboklee@naver.com");
 
         memberRepository.save(member);
 
@@ -82,23 +77,9 @@ class MemberServiceTest {
     @Test
     void findMembers(){
         // given
-        Member member1 = Member.builder()
-                .name("이찬복")
-                .email("chanboklee@naver.com")
-                .password("1234")
-                .build();
-
-        Member member2 = Member.builder()
-                .name("홍길동")
-                .email("hong@naver.com")
-                .password("1234")
-                .build();
-
-        Member member3 = Member.builder()
-                .name("임꺽정")
-                .email("lim@naver.com")
-                .password("1234")
-                .build();
+        Member member1 = createMember("이찬복", "chanboklee@naver.com");
+        Member member2 = createMember("홍길동", "hong@naver.com");
+        Member member3 = createMember("임꺽정", "lim@naver.com");
 
         memberRepository.saveAll(List.of(member1, member2, member3));
 
@@ -113,5 +94,13 @@ class MemberServiceTest {
                         tuple("홍길동", "hong@naver.com", "1234"),
                         tuple("임꺽정", "lim@naver.com", "1234")
                 );
+    }
+
+    private Member createMember(String name, String email) {
+        return Member.builder()
+                .name(name)
+                .email(email)
+                .password("1234")
+                .build();
     }
 }
