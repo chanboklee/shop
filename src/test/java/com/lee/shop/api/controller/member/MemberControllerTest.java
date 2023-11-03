@@ -1,5 +1,6 @@
 package com.lee.shop.api.controller.member;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lee.shop.api.service.member.MemberService;
 import com.lee.shop.api.service.member.request.MemberSaveServiceRequest;
@@ -40,6 +41,25 @@ class MemberControllerTest {
 
         // when // then
         mockMvc.perform(MockMvcRequestBuilders.post("/api/members")
+                        .content(objectMapper.writeValueAsString(memberSaveServiceRequest))
+                        .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @DisplayName("가입된 회원을 전체 조회한다.")
+    @Test
+    void findMembers() throws Exception {
+        // given
+        MemberSaveServiceRequest memberSaveServiceRequest = MemberSaveServiceRequest.builder()
+                .name("이찬복")
+                .email("chanboklee@naver.com")
+                .password("1234")
+                .build();
+
+        // when // then
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/members")
                         .content(objectMapper.writeValueAsString(memberSaveServiceRequest))
                         .contentType(MediaType.APPLICATION_JSON)
                 )
