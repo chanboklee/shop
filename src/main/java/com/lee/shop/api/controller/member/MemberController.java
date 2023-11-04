@@ -2,7 +2,7 @@ package com.lee.shop.api.controller.member;
 
 import com.lee.shop.api.controller.member.request.MemberSaveRequest;
 import com.lee.shop.api.service.member.MemberService;
-import com.lee.shop.api.service.member.response.MemberListResponse;
+import com.lee.shop.api.service.member.response.MemberResponse;
 import com.lee.shop.api.service.member.response.MemberSaveResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -32,7 +32,12 @@ public class MemberController {
     }
 
     @GetMapping("/members")
-    public List<MemberListResponse> findMembers(){
+    public List<MemberResponse> findMembers(){
         return memberService.findMembers();
+    }
+
+    @GetMapping("/members/{memberId}")
+    public MemberResponse findMember(@PathVariable("memberId") Long memberId){
+        return memberService.findMember(memberId);
     }
 }

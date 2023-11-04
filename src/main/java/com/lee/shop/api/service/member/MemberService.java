@@ -1,7 +1,7 @@
 package com.lee.shop.api.service.member;
 
 import com.lee.shop.api.service.member.request.MemberSaveServiceRequest;
-import com.lee.shop.api.service.member.response.MemberListResponse;
+import com.lee.shop.api.service.member.response.MemberResponse;
 import com.lee.shop.api.service.member.response.MemberSaveResponse;
 import com.lee.shop.domain.member.Member;
 import com.lee.shop.domain.member.MemberRepository;
@@ -40,9 +40,15 @@ public class MemberService {
         }
     }
 
-    public List<MemberListResponse> findMembers(){
+    public List<MemberResponse> findMembers(){
         return memberRepository.findAll().stream()
-                .map(member -> MemberListResponse.of(member))
+                .map(member -> MemberResponse.of(member))
                 .collect(Collectors.toList());
+    }
+
+    public MemberResponse findMember(Long memberId){
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
+        return MemberResponse.of(member);
     }
 }
