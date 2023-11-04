@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class MemberListResponse {
+public class MemberResponse {
 
     private Long id;
     private String name;
@@ -13,15 +13,15 @@ public class MemberListResponse {
     private String password;
 
     @Builder
-    private MemberListResponse(Long id, String name, String email, String password) {
+    private MemberResponse(Long id, String name, String email, String password) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
     }
 
-    public static MemberListResponse of(Member member){
-        return MemberListResponse.builder()
+    public static MemberResponse of(Member member){
+        return MemberResponse.builder()
                 .id(member.getId())
                 .name(member.getName())
                 .email(member.getEmail())
