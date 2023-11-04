@@ -1,7 +1,7 @@
 package com.lee.shop.api.service.member;
 
 import com.lee.shop.api.service.member.request.MemberSaveServiceRequest;
-import com.lee.shop.api.service.member.response.MemberListResponse;
+import com.lee.shop.api.service.member.response.MemberResponse;
 import com.lee.shop.api.service.member.response.MemberSaveResponse;
 import com.lee.shop.domain.member.Member;
 import com.lee.shop.domain.member.MemberRepository;
@@ -84,7 +84,7 @@ class MemberServiceTest {
         memberRepository.saveAll(List.of(member1, member2, member3));
 
         // when
-        List<MemberListResponse> memberList = memberService.findMembers();
+        List<MemberResponse> memberList = memberService.findMembers();
 
         // then
         assertThat(memberList).hasSize(3)
