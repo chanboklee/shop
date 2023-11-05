@@ -96,6 +96,37 @@ class MemberServiceTest {
                 );
     }
 
+    @DisplayName("회원 ID를 기준으로 회원을 조회한다.")
+    @Test
+    void findMember(){
+        // given
+        Member member = createMember("이찬복", "chanboklee@naver.com");
+
+        memberRepository.save(member);
+
+        // when
+        MemberResponse findMember = memberService.findMember(member.getId());
+
+        // then
+        assertThat(findMember)
+                .extracting("name", "email", "password")
+                .contains("이찬복", "chanboklee@naver.com", "1234");
+    }
+
+    @DisplayName("회원 ID를 기준으로 회원을 조회할 시 존재하지 않으면 예외가 발생한다.")
+    @Test
+    void findMemberNotFound(){
+        // given
+        Member member = createMember("이찬복", "chanboklee@naver.com");
+
+        memberRepository.save(member);
+
+        // when // then
+        assertThatThrownBy(() -> memberService.findMember(2L))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("존재하지 않는 회원입니다.");
+    }
+
     private Member createMember(String name, String email) {
         return Member.builder()
                 .name(name)
