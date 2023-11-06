@@ -1,11 +1,15 @@
 package com.lee.shop.domain.member;
 
 import com.lee.shop.domain.BaseEntity;
+import com.lee.shop.domain.order.Order;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -19,6 +23,9 @@ public class Member extends BaseEntity {
     private String name;
     private String email;
     private String password;
+
+    @OneToMany(mappedBy = "member")
+    private List<Order> orders = new ArrayList<>();
 
     @Builder
     private Member(String name, String email, String password) {

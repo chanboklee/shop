@@ -1,7 +1,6 @@
-package com.lee.shop.domain.order;
+package com.lee.shop.domain.product;
 
 import com.lee.shop.domain.BaseEntity;
-import com.lee.shop.domain.member.Member;
 import com.lee.shop.domain.orderproduct.OrderProduct;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -13,23 +12,21 @@ import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@Table(name = "orders")
 @Entity
-public class Order extends BaseEntity {
+public class Product extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "order_id")
+    @Column(name = "product_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
+    private String name;
+    private int price;
+    private int stockQuantity;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "product")
     private List<OrderProduct> orderProducts = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
-    private OrderStatus orderStatus;
-
+    private ProductType productType;
 }
