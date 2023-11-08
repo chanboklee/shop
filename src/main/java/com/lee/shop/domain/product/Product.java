@@ -4,6 +4,7 @@ import com.lee.shop.domain.BaseEntity;
 import com.lee.shop.domain.orderproduct.OrderProduct;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -29,4 +30,13 @@ public class Product extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private ProductType productType;
+
+    @Builder
+    private Product(Long id, String name, int price, int stockQuantity, ProductType productType) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.stockQuantity = stockQuantity;
+        this.productType = productType;
+    }
 }
