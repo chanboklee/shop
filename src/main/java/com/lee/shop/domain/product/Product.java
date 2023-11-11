@@ -22,6 +22,7 @@ public class Product extends BaseEntity {
     private Long id;
 
     private String name;
+    private String productNumber;
     private int price;
     private int stockQuantity;
 
@@ -32,11 +33,15 @@ public class Product extends BaseEntity {
     private ProductType productType;
 
     @Builder
-    private Product(Long id, String name, int price, int stockQuantity, ProductType productType) {
-        this.id = id;
+    private Product(String name, String productNumber, int price, int stockQuantity, ProductType productType) {
+        this.productNumber = productNumber;
         this.name = name;
         this.price = price;
         this.stockQuantity = stockQuantity;
         this.productType = productType;
+    }
+
+    public void removeStock(){
+
     }
 }

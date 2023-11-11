@@ -17,8 +17,21 @@ public class ProductService {
 
     @Transactional
     public ProductCreateResponse createProduct(ProductCreateServiceRequest productCreateServiceRequest){
+        String productNumber = createProductNumber();
+
         Product product = productCreateServiceRequest.toEntity();
         Product saveProduct = productRepository.save(product);
         return ProductCreateResponse.of(saveProduct);
+    }
+
+    private String createProductNumber() {
+        String productNumber = productRepository.findByProductNumberTop1ByOrderByIdDesc();
+        if(productNumber == null){
+            return "001";
+        }
+        int latestProductNumberInt = Integer.valueOf(productNumber);
+        int nextProductNumberInt = latestProductNumberInt + 1;
+
+        return String.format("%03d", nextProductNumberInt);
     }
 }
