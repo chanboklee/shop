@@ -25,11 +25,11 @@ public class ProductService {
     }
 
     private String createProductNumber() {
-        String productNumber = productRepository.findByProductNumberTop1ByOrderByIdDesc();
-        if(productNumber == null){
+        Product product = productRepository.findTop1ByOrderByIdDesc();
+        if(product == null){
             return "001";
         }
-        int latestProductNumberInt = Integer.valueOf(productNumber);
+        int latestProductNumberInt = Integer.valueOf(product.getProductNumber());
         int nextProductNumberInt = latestProductNumberInt + 1;
 
         return String.format("%03d", nextProductNumberInt);

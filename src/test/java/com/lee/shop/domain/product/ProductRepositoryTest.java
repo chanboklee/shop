@@ -1,6 +1,5 @@
 package com.lee.shop.domain.product;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,7 +10,6 @@ import java.util.List;
 
 import static com.lee.shop.domain.product.ProductType.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class ProductRepositoryTest {
@@ -37,21 +35,21 @@ class ProductRepositoryTest {
         productRepository.saveAll(List.of(product1, product2, product3));
 
         // when
-        String latestProductNumber = productRepository.findByProductNumberTop1ByOrderByIdDesc();
+        Product product = productRepository.findTop1ByOrderByIdDesc();
 
         // then
-        assertThat(latestProductNumber).isEqualTo(targetProductNumber);
+        assertThat(product.getProductNumber()).isEqualTo(targetProductNumber);
     }
 
-    @DisplayName("가장 마지막으로 저장한 상품의 상품번호를 읽어올 때, 상품이 하나도 없는 경우에는 null을 반환한다.")
+    @DisplayName("가장 마지막으로 저장한 상품의 상품번호를 읽어올 때, 상품이 하나도 없는 경우에는 null 을 반환한다.")
     @Test
     void findLatestProductNumberWhenProductIsEmpty(){
 
         // when
-        String latestProductNumber = productRepository.findByProductNumberTop1ByOrderByIdDesc();
+        Product product = productRepository.findTop1ByOrderByIdDesc();
 
         // then
-        assertThat(latestProductNumber).isNull();
+        assertThat(product).isNull();
     }
 
     private Product createProduct(String name, String productNumber, int stockQuantity, int price, ProductType productType) {

@@ -4,5 +4,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-     String findByProductNumberTop1ByOrderByIdDesc();
+     Product findTop1ByOrderByIdDesc();
 }
