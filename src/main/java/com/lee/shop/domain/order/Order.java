@@ -38,16 +38,17 @@ public class Order extends BaseEntity {
     private OrderStatus orderStatus;
 
     @Builder
-    private Order(Member member, List<Product> products, OrderStatus orderStatus) {
+    private Order(Member member, List<Product> products, OrderStatus orderStatus){
         this.member = member;
+        this.orderStatus = orderStatus;
         this.orderProducts = products.stream()
                 .map(product -> new OrderProduct(this, product))
                 .collect(Collectors.toList());
-        this.orderStatus = orderStatus;
     }
 
-    public static Order createOrder(List<Product> products){
+    public static Order createOrder(Member member, List<Product> products){
         return Order.builder()
+                .member(member)
                 .orderStatus(ORDER)
                 .products(products)
                 .build();
