@@ -1,6 +1,7 @@
 package com.lee.shop.domain.order;
 
 import com.lee.shop.domain.BaseEntity;
+import com.lee.shop.domain.delivery.Delivery;
 import com.lee.shop.domain.member.Member;
 import com.lee.shop.domain.orderproduct.OrderProduct;
 import com.lee.shop.domain.product.Product;
@@ -33,6 +34,10 @@ public class Order extends BaseEntity {
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderProduct> orderProducts = new ArrayList<>();
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "delivery_id")
+    private Delivery delivery;
 
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
