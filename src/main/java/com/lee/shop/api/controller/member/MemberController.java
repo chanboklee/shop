@@ -1,13 +1,10 @@
 package com.lee.shop.api.controller.member;
 
+import com.lee.shop.api.ApiResponse;
 import com.lee.shop.api.controller.member.request.MemberSaveRequest;
 import com.lee.shop.api.service.member.MemberService;
 import com.lee.shop.api.service.member.response.MemberResponse;
 import com.lee.shop.api.service.member.response.MemberSaveResponse;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,21 +20,18 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    @Operation(summary = "회원 가입", description = "회원 가입",
-            responses = {@ApiResponse(content = @Content(schema = @Schema(implementation = MemberSaveResponse.class)))}
-    )
     @PostMapping("/members")
-    public MemberSaveResponse saveMember(@RequestBody @Valid MemberSaveRequest memberSaveRequest){
-        return memberService.saveMember(memberSaveRequest.toServiceRequest());
+    public ApiResponse<MemberSaveResponse> saveMember(@RequestBody @Valid MemberSaveRequest memberSaveRequest){
+        return ApiResponse.ok(memberService.saveMember(memberSaveRequest.toServiceRequest()));
     }
 
     @GetMapping("/members")
-    public List<MemberResponse> findMembers(){
-        return memberService.findMembers();
+    public ApiResponse<List<MemberResponse>> findMembers(){
+        return ApiResponse.ok(memberService.findMembers());
     }
 
     @GetMapping("/members/{memberId}")
-    public MemberResponse findMember(@PathVariable("memberId") Long memberId){
-        return memberService.findMember(memberId);
+    public ApiResponse<MemberResponse> findMember(@PathVariable("memberId") Long memberId){
+        return ApiResponse.ok(memberService.findMember(memberId));
     }
 }

@@ -1,5 +1,6 @@
 package com.lee.shop.api.controller.product;
 
+import com.lee.shop.api.ApiResponse;
 import com.lee.shop.api.controller.product.request.ProductCreateRequest;
 import com.lee.shop.api.service.product.ProductService;
 import com.lee.shop.api.service.product.response.ProductCreateResponse;
@@ -17,7 +18,7 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping("/products")
-    public ProductCreateResponse createProduct(@RequestBody ProductCreateRequest productCreateRequest){
-        return productService.createProduct(productCreateRequest.toServiceRequest());
+    public ApiResponse<ProductCreateResponse> createProduct(@RequestBody ProductCreateRequest productCreateRequest){
+        return ApiResponse.ok(productService.createProduct(productCreateRequest.toServiceRequest()));
     }
 }
