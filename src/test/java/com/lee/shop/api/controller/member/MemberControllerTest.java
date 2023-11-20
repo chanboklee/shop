@@ -1,13 +1,12 @@
 package com.lee.shop.api.controller.member;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.lee.shop.api.controller.member.request.MemberSaveRequest;
 import com.lee.shop.api.service.member.MemberService;
 import com.lee.shop.api.service.member.request.MemberSaveServiceRequest;
 import com.lee.shop.api.service.member.response.MemberSaveResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -18,7 +17,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @ActiveProfiles("test")
 @WebMvcTest(MemberController.class)
@@ -51,6 +50,49 @@ class MemberControllerTest {
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
+
+    @DisplayName("신규 회원가입을 할 때 이름은 필수값이다.")
+    @Test
+    void saveMemberWithoutName() throws Exception {
+        // given
+        MemberSaveRequest memberSaveRequest = MemberSaveRequest.builder()
+                .email("chanboklee@naver.com")
+                .password("1234")
+                .build();
+
+        // when // then
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/members")
+                        .content(objectMapper.writeValueAsString(memberSaveRequest))
+                        .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(jsonPath("$.code").value("400"))
+                .andExpect(jsonPath("$.httpStatus").value("BAD_REQUEST"))
+                .andExpect(jsonPath("$.message").value("이름은 필수입니다."));
+    }
+
+    @DisplayName("신규 회원가입을 할 때 이메일은 필수값이다.")
+    @Test
+    void saveMemberWithoutEmail() throws Exception {
+        // given
+        MemberSaveRequest memberSaveRequest = MemberSaveRequest.builder()
+                .name("이찬복")
+                .password("1234")
+                .build();
+
+        // when // then
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/members")
+                .content(objectMapper.writeValueAsString(memberSaveRequest))
+                .contentType(MediaType.APPLICATION_JSON)
+        )
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(jsonPath("$.code").value("400"))
+                .andExpect(jsonPath("$.httpStatus").value("BAD_REQUEST"))
+                .andExpect(jsonPath("$.message").value("이메일은 필수입니다."));
+    }
+
 
     @DisplayName("가입된 회원을 전체 조회한다.")
     @Test

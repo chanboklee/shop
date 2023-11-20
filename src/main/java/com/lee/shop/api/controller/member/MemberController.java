@@ -21,7 +21,7 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping("/members")
-    public ApiResponse<MemberSaveResponse> saveMember(@RequestBody @Valid MemberSaveRequest memberSaveRequest){
+    public ApiResponse<MemberSaveResponse> saveMember(@Valid @RequestBody MemberSaveRequest memberSaveRequest){
         return ApiResponse.ok(memberService.saveMember(memberSaveRequest.toServiceRequest()));
     }
 
