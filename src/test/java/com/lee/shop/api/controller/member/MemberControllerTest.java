@@ -83,14 +83,35 @@ class MemberControllerTest {
 
         // when // then
         mockMvc.perform(MockMvcRequestBuilders.post("/api/members")
-                .content(objectMapper.writeValueAsString(memberSaveRequest))
-                .contentType(MediaType.APPLICATION_JSON)
-        )
+                        .content(objectMapper.writeValueAsString(memberSaveRequest))
+                        .contentType(MediaType.APPLICATION_JSON)
+                )
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(jsonPath("$.code").value("400"))
                 .andExpect(jsonPath("$.httpStatus").value("BAD_REQUEST"))
                 .andExpect(jsonPath("$.message").value("이메일은 필수입니다."));
+    }
+
+    @DisplayName("신규 회원가입을 할 때 패스워드는 필수값이다.")
+    @Test
+    void saveMemberWithoutPassword() throws Exception {
+        // given
+        MemberSaveRequest memberSaveRequest = MemberSaveRequest.builder()
+                .name("이찬복")
+                .email("chanboklee@naver.com")
+                .build();
+
+        // when // then
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/members")
+                        .content(objectMapper.writeValueAsString(memberSaveRequest))
+                        .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(jsonPath("$.code").value("400"))
+                .andExpect(jsonPath("$.httpStatus").value("BAD_REQUEST"))
+                .andExpect(jsonPath("$.message").value("패스워드는 필수입니다."));
     }
 
 
