@@ -41,7 +41,11 @@ public class Product extends BaseEntity {
         this.productType = productType;
     }
 
-    public void removeStock(){
-
+    public void removeStock(int count){
+        int restStock = stockQuantity - count;
+        if(restStock < 0){
+            throw new IllegalArgumentException("재고가 부족합니다.");
+        }
+        this.stockQuantity = restStock;
     }
 }
