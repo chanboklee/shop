@@ -1,7 +1,7 @@
 package com.lee.shop.api.service.product;
 
 import com.lee.shop.api.service.product.request.ProductCreateServiceRequest;
-import com.lee.shop.api.service.product.response.ProductCreateResponse;
+import com.lee.shop.api.service.product.response.ProductResponse;
 import com.lee.shop.domain.product.ProductRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
@@ -36,10 +36,10 @@ class ProductServiceTest {
                 .productType(TOP)
                 .build();
 
-        ProductCreateResponse productCreateResponse = productService.createProduct(productCreateServiceRequest);
+        ProductResponse productResponse = productService.createProduct(productCreateServiceRequest);
 
-        assertThat(productCreateResponse.getId()).isNotNull();
-        assertThat(productCreateResponse)
+        assertThat(productResponse.getId()).isNotNull();
+        assertThat(productResponse)
                 .extracting("name", "price", "stockQuantity", "productType")
                 .contains("맨투맨", 16000, 100, TOP);
     }

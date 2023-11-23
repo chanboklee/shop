@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class ProductCreateResponse {
+public class ProductResponse {
 
     private Long id;
     private String name;
@@ -15,7 +15,7 @@ public class ProductCreateResponse {
     private ProductType productType;
 
     @Builder
-    private ProductCreateResponse(Long id, String name, int price, int stockQuantity, ProductType productType) {
+    private ProductResponse(Long id, String name, int price, int stockQuantity, ProductType productType) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -23,8 +23,8 @@ public class ProductCreateResponse {
         this.productType = productType;
     }
 
-    public static ProductCreateResponse of (Product product){
-        return ProductCreateResponse.builder()
+    public static ProductResponse of (Product product){
+        return ProductResponse.builder()
                 .id(product.getId())
                 .name(product.getName())
                 .price(product.getPrice())
