@@ -32,13 +32,17 @@ public class Product extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private ProductType productType;
 
+    @Enumerated(EnumType.STRING)
+    private ProductSellingStatus productSellingStatus;
+
     @Builder
-    private Product(String name, String productNumber, int price, int stockQuantity, ProductType productType) {
+    private Product(String name, String productNumber, int price, int stockQuantity, ProductType productType, ProductSellingStatus productSellingStatus) {
         this.productNumber = productNumber;
         this.name = name;
         this.price = price;
         this.stockQuantity = stockQuantity;
         this.productType = productType;
+        this.productSellingStatus = productSellingStatus;
     }
 
     public void removeStock(int count){
