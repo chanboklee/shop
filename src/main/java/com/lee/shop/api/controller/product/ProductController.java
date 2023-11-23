@@ -3,12 +3,11 @@ package com.lee.shop.api.controller.product;
 import com.lee.shop.api.ApiResponse;
 import com.lee.shop.api.controller.product.request.ProductCreateRequest;
 import com.lee.shop.api.service.product.ProductService;
-import com.lee.shop.api.service.product.response.ProductCreateResponse;
+import com.lee.shop.api.service.product.response.ProductResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RequestMapping("/api")
@@ -18,7 +17,12 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping("/products")
-    public ApiResponse<ProductCreateResponse> createProduct(@RequestBody ProductCreateRequest productCreateRequest){
+    public ApiResponse<ProductResponse> createProduct(@RequestBody ProductCreateRequest productCreateRequest){
         return ApiResponse.ok(productService.createProduct(productCreateRequest.toServiceRequest()));
+    }
+
+    @GetMapping("/products")
+    public ApiResponse<List<ProductResponse>> getSellingProducts(){
+        return ApiResponse.ok(productService.getSellingProducts());
     }
 }
