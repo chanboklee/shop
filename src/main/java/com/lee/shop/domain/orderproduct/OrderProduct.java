@@ -5,8 +5,11 @@ import com.lee.shop.domain.order.Order;
 import com.lee.shop.domain.product.Product;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -29,8 +32,33 @@ public class OrderProduct extends BaseEntity {
     @JoinColumn(name = "product_id")
     private Product product;
 
-    public OrderProduct(Order order, Product product) {
+    /**
+     * 연관관계 메서드
+     * @param order
+     */
+    public OrderProduct(Order order){
+        this.order = order;
+    }
+
+    @Builder
+    private OrderProduct(int price, int quantity, Order order, Product product) {
+        this.price = price;
+        this.quantity = quantity;
         this.order = order;
         this.product = product;
+    }
+
+    public static OrderProduct createOrderProduct(int price, int quantity, Product product){
+        OrderProduct orderProduct = OrderProduct.builder()
+                .price(price)
+                .quantity(quantity)
+                .product(product)
+                .build();
+
+        return orderProduct;
+    }
+
+    public int getTotalPrice(){
+        return price * quantity;
     }
 }

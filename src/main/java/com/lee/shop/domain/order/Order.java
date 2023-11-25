@@ -4,7 +4,6 @@ import com.lee.shop.domain.BaseEntity;
 import com.lee.shop.domain.delivery.Delivery;
 import com.lee.shop.domain.member.Member;
 import com.lee.shop.domain.orderproduct.OrderProduct;
-import com.lee.shop.domain.product.Product;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -43,19 +42,19 @@ public class Order extends BaseEntity {
     private OrderStatus orderStatus;
 
     @Builder
-    private Order(Member member, List<Product> products, OrderStatus orderStatus){
+    public Order(Member member, List<OrderProduct> orderProducts, OrderStatus orderStatus) {
         this.member = member;
-        this.orderStatus = orderStatus;
-        this.orderProducts = products.stream()
-                .map(product -> new OrderProduct(this, product))
+        this.orderProducts = orderProducts.stream()
+                .map(orderProduct -> new OrderProduct(this))
                 .collect(Collectors.toList());
+        this.orderStatus = orderStatus;
     }
 
-    public static Order createOrder(Member member, List<Product> products){
+    public static Order createOrder(Member member, List<OrderProduct> orderProducts) {
         return Order.builder()
                 .member(member)
+                .orderProducts(orderProducts)
                 .orderStatus(ORDER)
-                .products(products)
                 .build();
     }
 }
