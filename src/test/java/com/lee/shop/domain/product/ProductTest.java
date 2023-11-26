@@ -5,12 +5,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import static com.lee.shop.domain.product.ProductType.TOP;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+@ActiveProfiles("test")
 @Transactional
 @SpringBootTest
 class ProductTest {
@@ -48,6 +50,21 @@ class ProductTest {
         assertThatThrownBy(() -> savedProduct.removeStock(101))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("재고가 부족합니다.");
+    }
+
+    @DisplayName("상품의 재고가 증가한다.")
+    @Test
+    void addStock(){
+        // given
+        Product product = createProduct("001", "나이키 맨투맨", 16000, 100, TOP);
+        Product savedProduct = productRepository.save(product);
+
+        // when
+        Product findProduct = productRepository.findByProductNumber("001");
+        findProduct.addStock(2);
+
+        // then
+        assertThat(findProduct.getStockQuantity()).isEqualTo(102);
     }
 
     private Product createProduct(String productNumber, String name, int price, int stockQuantity, ProductType productType) {
