@@ -55,10 +55,15 @@ public class OrderProduct extends BaseEntity {
                 .product(product)
                 .build();
 
+        product.removeStock(quantity);
         return orderProduct;
     }
 
     public int getTotalPrice(){
         return price * quantity;
+    }
+
+    public void cancel(){
+        getProduct().addStock(quantity);
     }
 }

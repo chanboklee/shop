@@ -52,4 +52,8 @@ public class Product extends BaseEntity {
         }
         this.stockQuantity = restStock;
     }
+
+    public void addStock(int quantity) {
+        this.stockQuantity += quantity;
+    }
 }
