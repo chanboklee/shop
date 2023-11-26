@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.lee.shop.domain.order.OrderStatus.ORDER;
 
@@ -44,9 +43,7 @@ public class Order extends BaseEntity {
     @Builder
     public Order(Member member, List<OrderProduct> orderProducts, OrderStatus orderStatus) {
         this.member = member;
-        this.orderProducts = orderProducts.stream()
-                .map(orderProduct -> new OrderProduct(this))
-                .collect(Collectors.toList());
+        this.orderProducts = orderProducts;
         this.orderStatus = orderStatus;
     }
 
