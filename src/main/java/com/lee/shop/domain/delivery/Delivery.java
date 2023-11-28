@@ -20,6 +20,9 @@ public class Delivery {
     @Embedded
     private Address address;
 
+    @Enumerated(EnumType.STRING)
+    private DeliveryStatus deliveryStatus;
+
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "delivery")
     private Order order;
 }
