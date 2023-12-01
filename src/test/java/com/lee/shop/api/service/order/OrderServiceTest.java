@@ -25,6 +25,7 @@ import static com.lee.shop.domain.product.ProductSellingStatus.STOP_SELLING;
 import static com.lee.shop.domain.product.ProductType.ACCESSORIES;
 import static com.lee.shop.domain.product.ProductType.TOP;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
 @ActiveProfiles("test")
@@ -90,6 +91,36 @@ class OrderServiceTest {
         assertThat(orderResponse)
                 .extracting("name", "orderId")
                 .contains("이찬복", 1L);
+    }
+
+    @DisplayName("주문한 수량이 상품의 재고보다 많으면 예외가 발생한다.")
+    @Test
+    void createOrderWithoutStockQuantityThrowException(){
+        // given
+        Member member = createMember("이찬복", "chanboklee@naver.com", "1234");
+        memberRepository.save(member);
+
+        Product product1 = createProduct("001", "나이키 맨투맨", 25000, 100, TOP, SELLING);
+        Product product2 = createProduct("002", "귀걸이", 40000, 20, ACCESSORIES, STOP_SELLING);
+        productRepository.saveAll(List.of(product1, product2));
+
+        // when
+        OrderProductRequest orderProductRequest = OrderProductRequest.builder()
+                .productNumber("001")
+                .price(25000)
+                .quantity(101)
+                .build();
+
+        List<OrderProductRequest> orderProductRequestList = List.of(orderProductRequest);
+
+        OrderCreateServiceRequest orderCreateServiceRequest = OrderCreateServiceRequest.builder()
+                .orderProductRequests(orderProductRequestList)
+                .build();
+
+        // then
+        assertThatThrownBy(() -> orderService.saveOrder(member.getId(), orderCreateServiceRequest))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("재고가 부족합니다.");
     }
 
     private Member createMember(String name, String email, String password) {
