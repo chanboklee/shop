@@ -11,6 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 
@@ -19,6 +20,7 @@ import static com.lee.shop.domain.product.ProductType.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.groups.Tuple.tuple;
 
+@ActiveProfiles("test")
 @SpringBootTest
 class ProductServiceTest {
 
@@ -31,6 +33,34 @@ class ProductServiceTest {
     @AfterEach
     void tearDown() {
         productRepository.deleteAllInBatch();
+    }
+
+    @DisplayName("상품이 하나도 없는 경우 신규 상품을 등록하면 상품번호는 001이다.")
+    @Test
+    void createProductByProductNumber(){
+        // given
+        ProductCreateServiceRequest productCreateServiceRequest = ProductCreateServiceRequest.builder()
+                .name("나이키 맨투맨")
+                .price(16000)
+                .stockQuantity(100)
+                .productType(TOP)
+                .productSellingStatus(SELLING)
+                .build();
+
+        // when
+        ProductResponse productResponse = productService.createProduct(productCreateServiceRequest);
+
+        // then
+        assertThat(productResponse)
+                .extracting("productNumber", "name", "price", "stockQuantity", "productType", "productSellingStatus")
+                .contains("001", "나이키 맨투맨", 16000, 100, TOP, SELLING);
+
+        List<Product> products = productRepository.findAll();
+        assertThat(products).hasSize(1)
+                .extracting("productNumber", "name", "price", "stockQuantity", "productType", "productSellingStatus")
+                .containsExactly(
+                        tuple("001", "나이키 맨투맨", 16000, 100, TOP, SELLING)
+                );
     }
 
     @DisplayName("상품명, 가격, 재고수, 상품타입을 입력받아 상품을 등록한다.")
