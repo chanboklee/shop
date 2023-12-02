@@ -23,7 +23,7 @@ public class ProductService {
     public ProductResponse createProduct(ProductCreateServiceRequest productCreateServiceRequest){
         String productNumber = createProductNumber();
 
-        Product product = productCreateServiceRequest.toEntity();
+        Product product = productCreateServiceRequest.toEntity(productNumber);
         Product saveProduct = productRepository.save(product);
         return ProductResponse.of(saveProduct);
     }
