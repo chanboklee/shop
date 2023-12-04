@@ -20,7 +20,7 @@ import java.util.List;
 import static com.lee.shop.domain.product.ProductSellingStatus.SELLING;
 import static com.lee.shop.domain.product.ProductType.BOTTOM;
 import static com.lee.shop.domain.product.ProductType.TOP;
-import static org.mockito.Mockito.when;
+import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @WebMvcTest(controllers = ProductController.class)
@@ -196,7 +196,7 @@ class ProductControllerTest {
                 .build();
 
         List<ProductResponse> productResponseList = List.of(productResponse1, productResponse2);
-        when(productService.getSellingProducts()).thenReturn(productResponseList);
+        given(productService.getSellingProducts()).willReturn(productResponseList);
 
         // when // then
         mockMvc.perform(MockMvcRequestBuilders.get("/api/products"))
