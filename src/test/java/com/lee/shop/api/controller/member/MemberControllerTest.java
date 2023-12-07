@@ -1,18 +1,12 @@
 package com.lee.shop.api.controller.member;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.lee.shop.ControllerTestSupport;
 import com.lee.shop.api.controller.member.request.MemberSaveRequest;
-import com.lee.shop.api.service.member.MemberService;
 import com.lee.shop.api.service.member.request.MemberSaveServiceRequest;
 import com.lee.shop.api.service.member.response.MemberResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -23,18 +17,8 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
-@ActiveProfiles("test")
-@WebMvcTest(MemberController.class)
-class MemberControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
-
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    @MockBean
-    private MemberService memberService;
+class MemberControllerTest extends ControllerTestSupport {
 
     @DisplayName("신규 회원을 가입한다.")
     @Test

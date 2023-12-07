@@ -1,16 +1,11 @@
 package com.lee.shop.api.controller.order;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.lee.shop.ControllerTestSupport;
 import com.lee.shop.api.controller.order.request.OrderCreateRequest;
 import com.lee.shop.api.controller.order.request.OrderProductRequest;
-import com.lee.shop.api.service.order.OrderService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -20,17 +15,7 @@ import java.util.List;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
-@WebMvcTest(controllers = OrderController.class)
-class OrderControllerTest {
-
-    @Autowired
-    private MockMvc mockMvc;
-
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    @MockBean
-    private OrderService orderService;
+class OrderControllerTest extends ControllerTestSupport {
 
     @DisplayName("신규 주문을 등록한다.")
     @Test

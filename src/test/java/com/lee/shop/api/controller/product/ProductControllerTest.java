@@ -1,16 +1,11 @@
 package com.lee.shop.api.controller.product;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.lee.shop.ControllerTestSupport;
 import com.lee.shop.api.controller.product.request.ProductCreateRequest;
-import com.lee.shop.api.service.product.ProductService;
 import com.lee.shop.api.service.product.response.ProductResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -23,17 +18,7 @@ import static com.lee.shop.domain.product.ProductType.TOP;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
-@WebMvcTest(controllers = ProductController.class)
-class ProductControllerTest {
-
-    @Autowired
-    private MockMvc mockMvc;
-
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    @MockBean
-    private ProductService productService;
+class ProductControllerTest extends ControllerTestSupport {
 
     @DisplayName("상품명, 가격, 재고, 상품타입, 상품판매상태를 입력받아 상품을 등록한다.")
     @Test
