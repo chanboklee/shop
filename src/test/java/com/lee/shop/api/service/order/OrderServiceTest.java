@@ -1,5 +1,6 @@
 package com.lee.shop.api.service.order;
 
+import com.lee.shop.IntegrationTestSupport;
 import com.lee.shop.api.controller.order.request.OrderProductRequest;
 import com.lee.shop.api.service.order.request.OrderCreateServiceRequest;
 import com.lee.shop.api.service.order.response.OrderResponse;
@@ -15,8 +16,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 
@@ -27,10 +26,7 @@ import static com.lee.shop.domain.product.ProductType.TOP;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-
-@ActiveProfiles("test")
-@SpringBootTest
-class OrderServiceTest {
+class OrderServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private OrderRepository orderRepository;
