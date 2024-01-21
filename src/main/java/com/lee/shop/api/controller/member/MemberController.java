@@ -2,6 +2,7 @@ package com.lee.shop.api.controller.member;
 
 import com.lee.shop.api.ApiResponse;
 import com.lee.shop.api.controller.member.request.MemberSaveRequest;
+import com.lee.shop.api.controller.member.request.MemberUpdateRequest;
 import com.lee.shop.api.service.member.MemberService;
 import com.lee.shop.api.service.member.response.MemberResponse;
 import com.lee.shop.api.service.member.response.MemberSaveResponse;
@@ -33,5 +34,15 @@ public class MemberController {
     @GetMapping("/members/{memberId}")
     public ApiResponse<MemberResponse> findMember(@PathVariable("memberId") Long memberId){
         return ApiResponse.ok(memberService.findMember(memberId));
+    }
+
+    @PutMapping("/members/{memberId}")
+    public void updateMember(@PathVariable("memberId") Long memberId, @Valid @RequestBody MemberUpdateRequest memberUpdateRequest){
+        memberService.updateMember(memberId, memberUpdateRequest.toServiceRequest());
+    }
+
+    @DeleteMapping("/members/{memberId}")
+    public void deleteMember(@PathVariable("memberId") Long memberId){
+        memberService.deleteMember(memberId);
     }
 }

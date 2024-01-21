@@ -1,6 +1,8 @@
 package com.lee.shop.api.service.member;
 
+import com.lee.shop.api.controller.member.request.MemberUpdateRequest;
 import com.lee.shop.api.service.member.request.MemberSaveServiceRequest;
+import com.lee.shop.api.service.member.request.MemberUpdateServiceRequest;
 import com.lee.shop.api.service.member.response.MemberResponse;
 import com.lee.shop.api.service.member.response.MemberSaveResponse;
 import com.lee.shop.domain.member.Member;
@@ -50,5 +52,17 @@ public class MemberService {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
         return MemberResponse.of(member);
+    }
+
+    @Transactional
+    public void updateMember(Long memberId, MemberUpdateServiceRequest memberUpdateServiceRequest) {
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
+        member.update(memberUpdateServiceRequest.getName());
+    }
+
+    @Transactional
+    public void deleteMember(Long memberId) {
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
+        memberRepository.delete(member);
     }
 }

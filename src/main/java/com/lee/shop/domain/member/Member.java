@@ -1,5 +1,6 @@
 package com.lee.shop.domain.member;
 
+import com.lee.shop.api.service.member.request.MemberUpdateServiceRequest;
 import com.lee.shop.domain.BaseEntity;
 import com.lee.shop.domain.order.Order;
 import jakarta.persistence.*;
@@ -32,5 +33,9 @@ public class Member extends BaseEntity {
         this.name = name;
         this.email = email;
         this.password = password;
+    }
+
+    public void update(String name){
+        this.name = name;
     }
 }
