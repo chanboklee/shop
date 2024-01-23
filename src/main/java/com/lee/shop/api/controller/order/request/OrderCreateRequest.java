@@ -13,16 +13,16 @@ import java.util.List;
 public class OrderCreateRequest {
 
     @NotEmpty(message = "주문 리스트는 필수입니다.")
-    List<OrderProductRequest> orderProductRequests;
+    List<String> productNumbers;
 
     @Builder
-    private OrderCreateRequest(List<OrderProductRequest> orderProductRequests) {
-        this.orderProductRequests = orderProductRequests;
+    private OrderCreateRequest(List<String> productNumbers) {
+        this.productNumbers = productNumbers;
     }
 
     public OrderCreateServiceRequest toServiceRequest() {
         return OrderCreateServiceRequest.builder()
-                .orderProductRequests(orderProductRequests)
+                .productNumbers(productNumbers)
                 .build();
     }
 }
